@@ -90,8 +90,24 @@ To be able to plot who's downloading the most, the following metric is exported:
 
 ```
 $ curl -s http://ip6-localhost:3434/metrics | grep 192.168.1.50
-ipfix_bytes_received_total_total{local_ip="192.168.1.50"} 10198779
+ipfix_bytes_received_total_total{mac="E8:FF:1E:D5:F4:16"} 10198779
 ```
+
+Devices can churn through IPs, especially IPv6:
+
+```
+select uniq(clientIPv4),
+       uniq(clientIPv6),
+       uniq(clientMac)
+  from ipfix
+
+
+   ┌─uniq(clientIPv4)─┬─uniq(clientIPv6)─┬─uniq(clientMac)─┐
+1. │              183 │             2056 │              67 │
+   └──────────────────┴──────────────────┴─────────────────┘
+```
+
+MACs stay put, so we use them to export the metrics.
 
 ### Clickhouse table
 

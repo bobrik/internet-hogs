@@ -246,10 +246,7 @@ async fn measure(
 
                         if is_download {
                             family
-                                .get_or_create(&vec![(
-                                    "local_ip".to_owned(),
-                                    client_addr.to_string(),
-                                )])
+                                .get_or_create(&vec![("mac".to_owned(), client_mac.to_string())])
                                 .inc_by(bytes as u64);
                         }
 
