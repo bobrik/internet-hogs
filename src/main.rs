@@ -235,7 +235,7 @@ async fn measure(
                                 None => EMPTY_MAC,
                             }
                         } else {
-                            if !local_ip_to_mac.contains_key(&client_addr) {
+                            if Some(&src_mac) != local_ip_to_mac.get(&client_addr) {
                                 local_ip_to_mac.insert(client_addr.clone(), src_mac.clone());
                             }
 
